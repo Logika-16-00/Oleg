@@ -96,9 +96,15 @@ def show_res():
         AnswersGroupBox.hide()
         ResGroupBox.show()
         btn_ans.setText("Наступине питаня")
+        selected_button = RadioGroup.checkedButton()
+        #if selected_button:
+            #if q.check(selected_button.text):
+                #lb_res.setText("Ви правильно відповіли!")
+                #lb_correct.setText(q.answer)
     else:
         show_ans()
         show_q()
+
 def show_ans():
     AnswersGroupBox.show()
     ResGroupBox.hide()
