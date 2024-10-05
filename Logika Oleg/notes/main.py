@@ -11,33 +11,53 @@ class Widget(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.btn_make.clicked.connect(self.add_note)
-        self.ui.list_1.itemClicked.connect(self.show_note)
-        for note in note.keys():
+        self.ui.list_1.itemClicked.connect(self.show_notes)
+        for note in notes.keys():
             self.ui.list_1.addItem(note)
-        self.ui.btn_save.clicked.connect(self.save_note)
+        self.ui.bnt_save.clicked.connect(self.save_note)
         self.ui.btn_add.clicked.connect(self.add_tag)
+        self.ui.bnt_delete.clicked.connect(self.delete_notes)
+
 
 
     def show_notes(self,item):
         self.ui.list_2.clear()
         note_name= item.text()
         if note_name in notes:
-            self.ui.list_2.addItem(notes[note_name]["теги"])
-            self.ui.textEdit.addItem(notes[note_name]["текст"])
+            self.ui.list_2.addItems(notes[note_name]["теги"])
+            self.ui.textEdit.setText(notes[note_name]["текст"])
 
     def save_note(self):
         if self.ui.list_1.currentItem():
             key = self.ui.list_1.currentItem().text()
-            notes[key]["текст"] = self.ui.textEdit_2.toPlainText()
+            notes[key]["текст"] = self.ui.textEdit.toPlainText()
         self.write_to_file()
 
     def add_tag(self):
         if self.ui.list_1.currentItem():
-            tag_name,ok =QInputDialog.getText(self"Додати тег","Введіть тег")
+            tag_name,ok =QInputDialog.getText(self,"Додати тег","Введіть тег")
+            note_name = self.ui.list_1.currentItem().text()
             if tag_name and ok:
-                key = self.ui.list_1.currentItem().text()
-                notes[key]["теги"].append(tag_name)
+                if tag_name not in notes[note_name]["теги"]:
+                    self.ui.list_2.addItem(tag_name)
+                    notes[note_name]["теги"].append(tag_name)
+                self.write_to_file()
+
+    def delete_note(self):
+        if self.ui.list_1.currentItem():
+            note_name = self.ui.list_1.currentItem().text()
+            del notes[note_name]
+            self.ui.list_1.takeItem(self.ui.list_1.currentRow())
         self.write_to_file()
+
+    def delete_tag(self):
+        if self.ui.list_1.currentItem() and self.ui.list_2.currentItem():
+            note_name = self.ui.list_1.currentItem().text()
+            tag_name = self.ui.list_2.currentItem().text()
+            self.ui.list_2.takeItem(self.ui.list_2.currentRow())
+            notes[note_name]["теги"].remove(tag_name)
+        self.write_to_file()
+
 
     def add_note(self):
         note_name,ok = QInputDialog.getText(self ,"Додати замітку", "Назва замітку")
@@ -45,6 +65,7 @@ class Widget(QMainWindow):
             notes[note_name] = {"теги":[], "текст": ""}
             self.ui.list_1.addItem(note_name)
         self.write_to_file()
+
 
     def write_to_file(self):
         with open("notes/notes.json","w",encoding="utf-8") as file:
