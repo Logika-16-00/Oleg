@@ -16,7 +16,9 @@ class Widget(QMainWindow):
             self.ui.list_1.addItem(note)
         self.ui.bnt_save.clicked.connect(self.save_note)
         self.ui.btn_add.clicked.connect(self.add_tag)
-        self.ui.bnt_delete.clicked.connect(self.delete_notes)
+        self.ui.bnt_delete.clicked.connect(self.delete_note)
+        
+        self.ui.btn_detach.clicked.connect(self.delete_tag)
 
 
 
@@ -44,6 +46,9 @@ class Widget(QMainWindow):
                 self.write_to_file()
 
     def delete_note(self):
+        self.ui.list_2.clear()
+        self.ui.textEdit.clear()
+
         if self.ui.list_1.currentItem():
             note_name = self.ui.list_1.currentItem().text()
             del notes[note_name]
