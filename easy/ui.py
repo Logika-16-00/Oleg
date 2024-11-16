@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
 "border-radius: 10px;")
         self.btn_dir.setObjectName("btn_dir")
         self.btn_left = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_left.setGeometry(QtCore.QRect(200, 500, 111, 31))
+        self.btn_left.setGeometry(QtCore.QRect(190, 470, 111, 31))
         self.btn_left.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(0, 136, 136);\n"
 "border-radius: 10px;")
@@ -44,29 +44,35 @@ class Ui_MainWindow(object):
         self.label.setText("")
         self.label.setObjectName("label")
         self.btn_right = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_right.setGeometry(QtCore.QRect(320, 500, 111, 31))
+        self.btn_right.setGeometry(QtCore.QRect(310, 470, 111, 31))
         self.btn_right.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(0, 136, 136);\n"
 "border-radius: 10px;")
         self.btn_right.setObjectName("btn_right")
         self.btn_flip = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_flip.setGeometry(QtCore.QRect(440, 500, 111, 31))
+        self.btn_flip.setGeometry(QtCore.QRect(430, 470, 111, 31))
         self.btn_flip.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(0, 136, 136);\n"
 "border-radius: 10px;")
         self.btn_flip.setObjectName("btn_flip")
         self.btn_sharp = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_sharp.setGeometry(QtCore.QRect(560, 500, 111, 31))
+        self.btn_sharp.setGeometry(QtCore.QRect(560, 470, 111, 31))
         self.btn_sharp.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(0, 136, 136);\n"
 "border-radius: 10px;")
         self.btn_sharp.setObjectName("btn_sharp")
         self.QPushButton_6 = QtWidgets.QPushButton(self.centralwidget)
-        self.QPushButton_6.setGeometry(QtCore.QRect(680, 500, 111, 31))
+        self.QPushButton_6.setGeometry(QtCore.QRect(680, 470, 111, 31))
         self.QPushButton_6.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(0, 136, 136);\n"
 "border-radius: 10px;")
         self.QPushButton_6.setObjectName("QPushButton_6")
+        self.btn_left_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_left_2.setGeometry(QtCore.QRect(680, 510, 111, 31))
+        self.btn_left_2.setStyleSheet("color: rgb(255, 255, 255);\n"
+"background-color: rgb(0, 136, 136);\n"
+"border-radius: 10px;")
+        self.btn_left_2.setObjectName("btn_left_2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
@@ -88,6 +94,7 @@ class Ui_MainWindow(object):
         self.btn_flip.setText(_translate("MainWindow", "Дзеркало"))
         self.btn_sharp.setText(_translate("MainWindow", "Різкість"))
         self.QPushButton_6.setText(_translate("MainWindow", "Ч/Б"))
+        self.btn_left_2.setText(_translate("MainWindow", "Зберегти"))
 
 
 if __name__ == "__main__":

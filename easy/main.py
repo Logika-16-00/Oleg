@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QEvent
-from PyQt5.QtWidgets import QApplication,QInputDialog
+from PyQt5.QtWidgets import QApplication,QInputDialog,QMessageBox
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtGui import QPixmap
 from ui import Ui_MainWindow
@@ -14,6 +14,7 @@ class Widget(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.image = None
         self.ui.btn_right.clicked.connect(self.rotate_left)
         self.ui.btn_left.clicked.connect(self.rotate_right)
         self.ui.btn_flip.clicked.connect(self.flip_image)
@@ -22,25 +23,29 @@ class Widget(QMainWindow):
         self.ui.btn_dir.clicked.connect(self.show_files)
 
 
-        self.image = Image.open("depositphotos_11782835-stock-photo-autumn-gold-trees-in-a.jpg")
-        self.update_image()
+        self.ui.listWidget.itemClicked.connect(self.show_picture)
+        self.image = None
 
-    def update_image(self):
+    def update_image(self,image = None):
         self.ui.label.hide()
-        self.image.save("depositphotos_11782835-stock-photo-autumn-gold-trees-in-a.jpg")
-        pixmap = QPixmap("depositphotos_11782835-stock-photo-autumn-gold-trees-in-a.jpg")
-        w, h = self.ui.label.width(), self.ui.label.height()
-        pixmap = pixmap.scaled(w, h)
-        self.ui.label.setPixmap(pixmap)
-        self.ui.label.show()
+        if image:
+            pixmap = QPixmap(image)
+            self.image.save("copy.png")
+            pixmap = QPixmap("copy.png")
+            w, h = self.ui.label.width(), self.ui.label.height()
+            pixmap = pixmap.scaled(w, h)
+            self.ui.label.setPixmap(pixmap)
+            self.ui.label.show()
         
     def rotate_left(self):
         self.image = self.image.rotate(90)
-        self.update_image()
+        self.image.save("copy.png")
+        self.update_image("copy.png")
     
     def rotate_right(self):
         self.image = self.image.rotate(-90)
-        self.update_image()
+        self.image.save("copy.png")
+        self.update_image("copy.png")
 
     def  flip_image(self):
         self.image = self.image.transpose(Image.FLIP_LEFT_RIGHT)
@@ -79,6 +84,24 @@ class Widget(QMainWindow):
             for file in filter_files:
                 self.ui.listWidget.addItem(file)
 
+    def  show_picture(self):
+        if self.ui.listWidget.currentRow() >= 0:
+            filename = self.ui.listWidget.currentItem().text()
+            image_path = os.path.join(workdir, filename)
+            self.image = Image.open(image_path)
+            self.update_image(self.image)
+
+    def save_image(self): 
+        if self.image:
+            save_path, _ = QFileDialog.getSaveFileNames(self, "Зберегти файл", 
+                        self.workdir, "Images (*.png *.jpg *.jpeg *.bmp *.gif)")
+            if save_path:
+                self.image.save(save_path)
+                QMessageBox.information(self, "Успіх", "Зображення успішню збережено!")
+            else:
+                QMessageBox.warning(self, "Увага", "Файл для збереження не обрфно.")
+        else:
+            QMessageBox.warning(self, "Увага", "Немає зображення для збереження.")
 
 app = QApplication([])
 ex = Widget()
