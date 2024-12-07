@@ -158,7 +158,7 @@ border-radius: 10px;</string>
      <string>Ч/Б</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_left_2">
+   <widget class="QPushButton" name="btn_save">
     <property name="geometry">
      <rect>
       <x>680</x>
