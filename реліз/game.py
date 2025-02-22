@@ -35,9 +35,23 @@ class Player(sprite.Sprite):
         self.rect.y = y
         self.speed = speed
         self.life = life
+        self.is_jumping = False
+        self.jump_speed = 20
+        self.gravity = 1
     
     def show(self):
         wn.blit(self.image,(self.rect.x,self.rect.y))
+
+    def jump(self):
+        if not self.is_jumping:
+            self.is_jumping = True
+    def process_jump(self):
+        if self.is_jumping: 
+            self.rect.y -= self.jump_speed
+            self.jump_speed -= self.gravity
+            if self.jump_speed <= -10:
+                self.is_jumping = False
+                self.jump_speed = 20
 
     def move_1(self):
         keys = key.get_pressed()
@@ -46,7 +60,7 @@ class Player(sprite.Sprite):
         if keys[K_d]:
                 self.rect.x += self.speed
         if keys[K_w]:
-                self.rect.y -= self.speed*3
+                self.jump()
     def move_2(self):
             keys = key.get_pressed()
             if keys[K_j]:
@@ -54,12 +68,12 @@ class Player(sprite.Sprite):
             if keys[K_l]:
                 self.rect.x += self.speed
             if keys[K_i]:
-                self.rect.y -= self.speed*3
+                self.jump()
                 
 game = 1
 
-sf = Player("sf.png", 210,300,120,130,0,2)
-pf = Player("pf.png", 750,400,120,130,0,2)
+sf = Player("sf.png", 210,450,120,130,0,2)
+pf = Player("pf.png", 770,450,120,130,0,2)
 
 while game:
     wn.blit(fon,(0,0))
@@ -84,11 +98,12 @@ while game:
                  
             if sf.rect.y < 500:
                 sf.rect.y += 2
+    sf.process_jump()
+    pf.process_jump()
 
 
 
-            
-            
+
     display.update()
     clock.tick(fps)
 
