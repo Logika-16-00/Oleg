@@ -37,7 +37,7 @@ class Player(sprite.Sprite):
         self.life = life
         self.is_jumping = False
         self.jump_speed = 20
-        self.gravity = 1
+        self.gravity = 0.6
     
     def show(self):
         wn.blit(self.image,(self.rect.x,self.rect.y))
@@ -72,8 +72,8 @@ class Player(sprite.Sprite):
                 
 game = 1
 
-sf = Player("sf.png", 210,450,120,130,0,2)
-pf = Player("pf.png", 770,450,120,130,0,2)
+sf = Player("sf.png", 210,300,120,130,0,2)
+pf = Player("pf.png", 770,300,120,130,0,2)
 
 while game:
     wn.blit(fon,(0,0))
